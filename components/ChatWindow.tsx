@@ -113,19 +113,50 @@ export default function ChatWindow({ sessionId }: ChatWindowProps) {
   };
 
   return (
-    <div className="flex flex-col h-[600px] bg-[#0a0a0a] rounded-xl border border-gray-800 overflow-hidden">
+    <div className="relative flex h-[680px] flex-col overflow-hidden rounded-3xl border border-white/10 bg-slate-950/50 shadow-[0_30px_80px_rgba(2,8,23,0.55)] backdrop-blur-xl">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-400" />
+
+      <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+        <div>
+          <p className="text-xs uppercase tracking-[0.35em] text-cyan-100/60">
+            Live analysis
+          </p>
+          <h2 className="mt-1 text-lg font-semibold text-white">
+            ResumeBot chat
+          </h2>
+        </div>
+
+        <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-200">
+          <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_14px_rgba(110,231,183,0.9)]" />
+          Ready
+        </div>
+      </div>
+
       {/* Messages area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 space-y-4 overflow-y-auto bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.08),transparent_46%)] px-4 py-5">
         {messages.length === 0 && (
-          <div className="text-gray-400 text-center pt-20">
-            <p className="text-2xl mb-4">👋 Hi! I&apos;m ResumeBot — your AI resume coach.</p>
-            <p className="mb-2">Paste your resume text below and I&apos;ll give you:</p>
-            <ul className="text-left inline-block space-y-1">
-              <li>• A score for each section</li>
-              <li>• Specific improvement suggestions</li>
-              <li>• Better wording recommendations</li>
-            </ul>
-            <p className="mt-4">Just paste your resume to get started!</p>
+          <div className="flex min-h-full items-center justify-center px-4 py-10 text-center">
+            <div className="max-w-md rounded-3xl border border-white/10 bg-white/5 p-8 shadow-inner shadow-cyan-950/10">
+              <div className="mx-auto mb-4 h-14 w-14 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-indigo-400/20 ring-1 ring-white/10" />
+              <p className="text-2xl font-semibold text-white">
+                Hi! I&apos;m ResumeBot.
+              </p>
+              <p className="mt-3 text-sm leading-7 text-slate-300">
+                Paste your resume text and I&apos;ll score the sections, point out
+                the weak spots, and suggest cleaner wording.
+              </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-2 text-xs text-slate-300">
+                <span className="rounded-full border border-white/10 bg-slate-950/40 px-3 py-1">
+                  Section scores
+                </span>
+                <span className="rounded-full border border-white/10 bg-slate-950/40 px-3 py-1">
+                  Clear rewrites
+                </span>
+                <span className="rounded-full border border-white/10 bg-slate-950/40 px-3 py-1">
+                  Actionable feedback
+                </span>
+              </div>
+            </div>
           </div>
         )}
 
@@ -135,11 +166,20 @@ export default function ChatWindow({ sessionId }: ChatWindowProps) {
 
         {isLoading && messages[messages.length - 1]?.role === "user" && (
           <div className="flex justify-start">
-            <div className="bg-gray-900 rounded-lg px-4 py-3 max-w-[80%]">
-              <div className="flex space-x-1">
-                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
-                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
-                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
+            <div className="max-w-[80%] rounded-2xl rounded-bl-md border border-white/10 bg-white/5 px-4 py-3 shadow-lg shadow-cyan-950/10">
+              <div className="flex space-x-1.5">
+                <div
+                  className="h-2 w-2 animate-bounce rounded-full bg-cyan-300"
+                  style={{ animationDelay: "0ms" }}
+                />
+                <div
+                  className="h-2 w-2 animate-bounce rounded-full bg-cyan-300"
+                  style={{ animationDelay: "150ms" }}
+                />
+                <div
+                  className="h-2 w-2 animate-bounce rounded-full bg-cyan-300"
+                  style={{ animationDelay: "300ms" }}
+                />
               </div>
             </div>
           </div>
@@ -149,8 +189,11 @@ export default function ChatWindow({ sessionId }: ChatWindowProps) {
       </div>
 
       {/* Input area */}
-      <form onSubmit={handleSubmit} className="border-t border-gray-800 p-4">
-        <div className="flex gap-2">
+      <form
+        onSubmit={handleSubmit}
+        className="border-t border-white/10 bg-slate-950/50 p-4"
+      >
+        <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-3 shadow-inner shadow-slate-950/40">
           <textarea
             ref={textareaRef}
             value={input}
@@ -159,19 +202,21 @@ export default function ChatWindow({ sessionId }: ChatWindowProps) {
             placeholder="Paste your resume text here..."
             disabled={isLoading}
             rows={1}
-            className="flex-1 bg-gray-900 text-white placeholder-gray-500 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:opacity-50 resize-none"
+            className="min-h-[56px] w-full resize-none bg-transparent px-1 py-1 text-white placeholder:text-slate-500 focus:outline-none disabled:opacity-50"
           />
-          <button
-            type="submit"
-            disabled={!input.trim() || isLoading}
-            className="bg-indigo-500 hover:bg-indigo-600 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors"
-          >
-            Send
-          </button>
+          <div className="mt-3 flex flex-col gap-3 border-t border-white/5 pt-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs text-slate-400">
+              Press Enter to send, Shift+Enter for a new line.
+            </p>
+            <button
+              type="submit"
+              disabled={!input.trim() || isLoading}
+              className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-cyan-500 to-sky-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-950/30 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Analyze
+            </button>
+          </div>
         </div>
-        <p className="text-xs text-gray-500 mt-2">
-          Press Enter to send, Shift+Enter for newline
-        </p>
       </form>
     </div>
   );

@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+});
 
 export const metadata: Metadata = {
   title: "ResumeBot - AI Resume Analyser",
-  description: "Paste your resume. Get expert feedback in seconds.",
+  description: "Paste your resume and get clean, actionable feedback in seconds.",
 };
 
 export default function RootLayout({
@@ -16,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${spaceGrotesk.variable} ${spaceGrotesk.className} antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }

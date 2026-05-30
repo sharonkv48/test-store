@@ -37,13 +37,15 @@ export default function ChatMessage({ message }: ChatMessageProps) {
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
       <div
-        className={`max-w-[80%] rounded-lg px-4 py-3 ${
+        className={`max-w-[80%] rounded-2xl px-4 py-3 shadow-lg ${
           isUser
-            ? "bg-indigo-600 text-white"
-            : "bg-gray-900 text-gray-100"
+            ? "rounded-br-md border border-cyan-300/20 bg-gradient-to-br from-cyan-500 to-sky-600 text-white shadow-cyan-950/30"
+            : "rounded-bl-md border border-white/10 bg-white/5 text-slate-100 shadow-slate-950/30 backdrop-blur"
         }`}
       >
-        {renderContent(message.content)}
+        <div className="whitespace-pre-wrap break-words leading-7">
+          {renderContent(message.content)}
+        </div>
       </div>
     </div>
   );
